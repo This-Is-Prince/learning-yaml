@@ -1,0 +1,36 @@
+# .yaml or .yml both are same
+# let's write some yaml
+
+courses:
+  course_name: "DJango back end developer"
+  version: 1.5
+  price: &my_price 199
+  is_public: true
+  release_date: 2021-03-23 12:23:22
+  pre_enroll: null
+  tags:
+    - python
+    - web developer
+    - mysql
+  course_ta: ["king", "kumar", "prince"]
+  ta_details:
+    - name: "king"
+      email: "king@lco.dev"
+      role: "content admin"
+    - name: "kumar"
+      email: "kumar@lco.dev"
+      role: "discussion admin"
+    - { name: "prince", email: "prince@lco.dev", role: "devops" }
+  short_desc: >
+    here is a short
+    description for django course
+  long_desc: |
+    now we can store
+      al indentation
+    and related things
+  process_payment: *my_price
+  adv: &advanced
+    mykey: myval
+  another_adv:
+    one: two
+    <<: *advanced
