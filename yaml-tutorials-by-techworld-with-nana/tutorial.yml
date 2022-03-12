@@ -1,0 +1,91 @@
+# 1.Comments
+# this is comment
+
+# 2.Key Value pairs
+# different way value as a string
+# app: user-authentication
+# app: 'user-authentication'
+# app: "user-authentication"
+
+# port: 9000
+# version: 1.7
+
+# >>>>> 3.Objects
+microservice:
+  app: user-authentication
+  port: 9000
+  version: 1.7
+
+# 4.Lists / arrays
+microservices:
+  - app: "user-authentication"
+    port: 9000
+    version: 1.7
+  - app: shopping-cart
+    port: 9002
+    versions:
+      - 1.9
+      - 2.0
+      - 2.1
+    numbers: [1.9, 2.0, 2.1]
+
+# 5.Multiline string
+multilineString: |
+  this is a single line string,
+  that should be all on one line.
+  some other stuff
+
+# 5.SingleLine string
+singlelineString: >
+  this is a single line string,
+  that should be all on one line.
+  some other stuff
+
+# example
+data:
+  mosquitto.conf: |
+    log_dest stdout
+    log_type all
+    log_timestamp true
+    listener 9001
+
+command:
+  - sh
+  - -c
+  - |
+    #!/user/bin/env bash -e
+    http () {
+        local path="${1}"
+        set -- -XGET -s --fail
+        # some more stuff here
+        curl -k "$@" "http://localhost:5601${path}"
+    }
+    http "/app/kibana"
+
+# 7.Environment Variables
+# readiness probe
+commands:
+  - /bin/sh
+  - -ec
+  - >-
+    mysql -h 127.0.0.1 -u root - p$MYSQL_ROOT_PASSWORD -e "SELECT 1"
+
+# 8.Placeholders
+apiVersion: v1
+kind: Service
+metadata:
+  name: { { .Values.service.name } }
+spec:
+  selector:
+    app: { { .Values.service.app } }
+  ports:
+    - protocol: TCP
+      port: { { .Values.service.port } }
+      targetPort: { { .Values.service.targetPort } }
+
+# multiple yaml documents
+---
+apiVersion: v1
+king: Secret
+metadata:
+  name: mosquitto.secret-file
